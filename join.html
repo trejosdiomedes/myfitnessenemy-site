@@ -24,11 +24,16 @@
               stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
   h1 { font-size:32px; margin:0 0 12px; letter-spacing:-0.6px; }
   p { font-size:17px; color:var(--dim); margin:0 0 18px; }
-  .code { display:inline-block; margin:6px 0 4px; padding:16px 26px; border-radius:14px;
+  /* The code is the point of this page, so it gets its own line and the button
+     sits under it. Both were inline-block and landed side by side, which put a
+     call to action next to the thing the reader actually came for. */
+  .code { display:block; width:fit-content; margin:6px auto 0;
+          padding:16px 26px; border-radius:14px;
           border:1px dashed var(--line); background:color-mix(in srgb, var(--fg) 4%, transparent);
           font:700 30px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
           letter-spacing:4px; color:var(--fg); }
-  .open { display:inline-block; margin:22px 0 0; padding:15px 30px; border-radius:13px;
+  .open { display:block; width:fit-content; margin:22px auto 0;
+          padding:15px 30px; border-radius:13px;
           background:var(--accent); color:#fff; text-decoration:none; font-weight:600; }
   .note { margin-top:34px; padding-top:22px; border-top:1px solid var(--line);
           font-size:14px; color:var(--dim); text-align:left; }
@@ -45,17 +50,17 @@
     <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
   </div>
 
-  <h1>You've been challenged</h1>
+  <h1 id="head">You've been challenged</h1>
   <p id="lede">Someone wants you in their group on MyFitnessEnemy. Here's the code.</p>
 
   <div class="code" id="code">──────</div>
 
   <!-- Opens the app straight into the join flow if it is installed. Does
        nothing at all otherwise, which is exactly why the code is printed above
-       in plain sight and the steps below do not mention this button. -->
+       in plain sight and the steps below do not depend on this button. -->
   <a class="open" id="open" href="#">Open MyFitnessEnemy</a>
 
-  <div class="note">
+  <div class="note" id="steps">
     <strong>If that button does nothing</strong>, the app isn't on this device yet. Either way the code above is all you need:
     <ol>
       <li>Open MyFitnessEnemy on your phone.</li>
@@ -80,12 +85,16 @@
     document.getElementById('code').textContent = code;
     document.getElementById('open').href = 'myfitnessenemy://join/' + encodeURIComponent(code);
   } else {
-    // No code in the link. Say so plainly rather than showing a row of dashes
-    // and letting somebody think they have been given something.
+    // No code in the link. Every part of the page that refers to "the code
+    // above" or "that button" has to go too — a page that congratulates you on
+    // being challenged and then points at a button that is not there reads as
+    // broken, which is worse than the missing code it is trying to explain.
+    document.getElementById('head').textContent = 'This invite is incomplete';
     document.getElementById('lede').textContent =
-      'This invite link is missing its code. Ask whoever sent it to share it again from the app.';
+      'The link is missing its code, so there is nothing here to join yet. Ask whoever sent it to share the invite again from the app.';
     document.getElementById('code').classList.add('hidden');
     document.getElementById('open').classList.add('hidden');
+    document.getElementById('steps').classList.add('hidden');
   }
 </script>
 </body>
