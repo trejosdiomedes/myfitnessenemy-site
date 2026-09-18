@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reset your password · MyFitnessEnemy</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: light dark; --bg:#fbfaf8; --fg:#1e1c1a; --dim:#5a554e; --line:#e0dcd4; --accent:#791f1f; --good:#2e6f4e; --warn:#b06a12; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161616; --fg:#f2efe9; --dim:#b8b3aa; --line:#33312e; --accent:#e08a86; --good:#5fbf8b; --warn:#e0a94a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width:460px; margin:0 auto; padding:80px 20px 60px; }
+  h1 { font-size:28px; margin:0 0 10px; letter-spacing:-0.5px; }
+  p { color:var(--dim); margin:0 0 22px; }
+  label { display:block; font-size:13px; font-weight:600; margin:0 0 7px; }
+  input { width:100%; padding:14px 15px; font-size:16px; border-radius:11px;
+          border:1px solid var(--line); background:var(--bg); color:var(--fg); }
+  button { width:100%; margin-top:16px; padding:15px; border:0; border-radius:12px;
+           background:var(--accent); color:#fff; font-size:16px; font-weight:600; cursor:pointer; }
+  button[disabled] { opacity:.5; cursor:default; }
+  .msg { margin-top:18px; font-size:15px; }
+  .ok  { color:var(--good); }
+  .bad { color:var(--warn); }
+  footer { margin-top:44px; color:var(--dim); font-size:13px; }
+  footer a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Choose a new password</h1>
+  <p>At least 8 characters. Use something you have not used anywhere else.</p>
+
+  <form id="f">
+    <label for="pw">New password</label>
+    <input id="pw" type="password" autocomplete="new-password" minlength="8" required>
+    <button id="go" type="submit">Set it</button>
+  </form>
+  <div class="msg" id="msg"></div>
+
+  <footer>
+    Vestroash · Miami, FL ·
+    <a href="mailto:trejos.diomedes03@gmail.com">trejos.diomedes03@gmail.com</a>
+  </footer>
+</main>
+
+<script>
+// The recovery link lands here with an access token in the URL fragment. The
+// fragment never reaches a server — not this page's host, not any log — which
+// is exactly why Supabase puts it there rather than in the query string.
+//
+// The key below is the PUBLISHABLE key. It is meant to be public; on its own it
+// can do nothing the row-security policies do not already allow.
+const SUPABASE_URL = "https://sxturzccalsdhdslepzt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_w2T3Y_GtaZ4apl3Glht6LA_7wBSvj9C";
+
+const params = new URLSearchParams(location.hash.slice(1));
+const token  = params.get("access_token");
+const msg    = document.getElementById("msg");
+const go     = document.getElementById("go");
+
+if (!token) {
+  msg.textContent = "This link is missing its token, or it has already been used. Ask for a new reset email from the app.";
+  msg.className = "msg bad";
+  go.disabled = true;
+}
+
+document.getElementById("f").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  go.disabled = true;
+  msg.className = "msg";
+  msg.textContent = "Setting it…";
+  try {
+    const r = await fetch(SUPABASE_URL + "/auth/v1/user", {
+      method: "PUT",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password: document.getElementById("pw").value })
+    });
+    if (r.ok) {
+      msg.className = "msg ok";
+      msg.textContent = "Done. Go back to the app and sign in with your new password.";
+      document.getElementById("f").style.display = "none";
+    } else {
+      const body = await r.json().catch(() => ({}));
+      msg.className = "msg bad";
+      msg.textContent = body.msg || body.error_description ||
+        "That did not work. The link may have expired — ask for a new one from the app.";
+      go.disabled = false;
+    }
+  } catch (err) {
+    msg.className = "msg bad";
+    msg.textContent = "Could not reach the server. Check your connection and try again.";
+    go.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
