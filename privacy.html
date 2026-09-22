@@ -33,14 +33,15 @@
 <main>
 
 <h1>Privacy Policy</h1>
-<p class="sub">MyFitnessEnemy · Vestroash · Last updated 15 September 2026</p>
+<p class="sub">MyFitnessEnemy · Vestroash · Last updated 21 September 2026</p>
 
 <div class="box">
   <strong>The short version.</strong> Your diary — every meal, workout, night of sleep
   and weigh-in — is stored on your iPhone and nowhere else. If you sign in to compete
-  with friends, the only things that ever leave your phone are a daily score, an XP
-  total and a streak count. We do not sell data, we do not run ads, and we do not
-  track you across other apps or websites.
+  with friends, what leaves your phone is a small set of numbers — a daily score,
+  XP, a streak, and how far or how much you trained in each sport — plus your display
+  name. We do not sell data, we do not run ads, and we do not track you across other
+  apps or websites.
 </div>
 
 <h2>Who we are</h2>
@@ -73,14 +74,22 @@ no setting that changes that.</p>
       (USDA FoodData Central and Open Food Facts) to look it up. Nothing about you
       is attached to that request.</li>
   <li><strong>Competing with others.</strong> If you create an account to use groups,
-      challenges or the leaderboard, your device uploads only: a daily score, an XP
-      total, a streak count, your chosen display name, and whether a day's training
-      came from a connected device. Your diary is never uploaded. Other players see
-      your display name and those numbers.</li>
-  <li><strong>The AI coach.</strong> If you turn on the optional AI wording layer with
-      your own API key, the app sends your calculated targets and any nutrition flags
-      to Anthropic to phrase a reply. It does not send your diary, your weight, or
-      your age.</li>
+      challenges or the rankings, your device uploads, per day: a score, an XP total,
+      a streak count, whether the day's training came from a connected device, and one
+      number per sport — kilometres run, cycled, swum or walked, kilograms lifted, and
+      minutes of HIIT, yoga or team sport. It also uploads your display name, avatar
+      and level. Your diary is never uploaded: no meals, no body weight, no sleep, no
+      measurements.</li>
+  <li><strong>Who sees it.</strong> People in your groups see your display name and
+      those numbers, including your records. The world rankings show your display
+      name, avatar, level and rank-deciding number to other signed-in players. No one
+      signed out can see any of it.</li>
+  <li><strong>Call-outs and notifications.</strong> If you allow notifications while
+      signed in, your device's push token is stored on our server so that a member of
+      your groups can send you a call-out. A call-out is one of a fixed list of lines —
+      nobody can type a message to you — and the record of who called out whom is
+      kept for 30 days. Only people who share a group with you can send one. The
+      token is deleted when you sign out, delete your account, or remove the app.</li>
 </ul>
 
 <h2>What we never do</h2>
@@ -94,17 +103,25 @@ no setting that changes that.</p>
 
 <h2>Accounts</h2>
 <p>Accounts are optional. The app is fully usable without one; you simply compete
-against nobody. If you create one, we hold your display name, an anonymous user
-identifier, and the score rows described above. Sign in with Apple is supported, and
-if you choose to hide your email we never receive it.</p>
+against nobody. If you create one, we hold your display name, a user identifier, the
+score rows described above, and — only if you sign up with email — your email address,
+which is used to sign you in and reset your password and nothing else. Sign in with
+Apple is supported, and if you choose to hide your email we never receive it.</p>
+
+<h2>Service providers</h2>
+<p>Accounts, scores and notifications run on Supabase, which stores that data on our
+behalf and may not use it for anything else. Push notifications are delivered by
+Apple. There is no other third party, no analytics SDK and no advertising SDK in the
+app.</p>
 
 <h2>Deleting your data</h2>
 <ul>
   <li><strong>Everything on the device:</strong> Settings → Start over. This is
       immediate and irreversible.</li>
-  <li><strong>Your account and all server rows:</strong> Settings → More → Community →
-      Delete account. Every row we hold is removed. You can also email us and we will
-      do it for you.</li>
+  <li><strong>Your account and all server rows:</strong> on the Today screen tap
+      ⋯ → Community → Delete my account. Every row we hold is removed immediately —
+      scores, group memberships, call-outs and push tokens. You can also email us and
+      we will do it for you.</li>
   <li><strong>Everything at once:</strong> deleting the app removes all local data.</li>
 </ul>
 
